@@ -4,43 +4,42 @@
     </div>
 </template>
 <script>
-const LENGTH = 5; // 星星的总数
-const CLS_ON = 'on';
-const CLS_HALF = 'half';
-const CLS_OFF = 'off';
+const LENGTH = 5 // 星星的总数
+const CLS_ON = 'on'
+const CLS_HALF = 'half'
+const CLS_OFF = 'off'
 export default {
-    props: {
-      size: { // 星星的尺寸 有24/36/48 三种尺寸 也可以直接写成  size: ['size']
-        type: Number
-      },
-      score: { // 评分
-        type: Number
-      }
+  props: {
+    size: { // 星星的尺寸 有24/36/48 三种尺寸 也可以直接写成  size: ['size']
+      type: Number
     },
-    computed: {
-      starType () { // 简写 starType(){}
-        return 'star-' + this.size; // 动态的返回star大小的样式
-      },
-      itemClasses() { // 获取判断星星的类型
-        let result = [];
-        // 例如 4.3 * 2 = 8.6 向下取整就是 9，9 / 2 就是 4.5
-        let score = Math.floor(this.score * 2) / 2; // 获取评分的分数
-        console.log(score)
-        let hasDecimal = score % 1 !== 0; // 判断是否有小数(半星)
-        let integer = Math.floor(score); // 计算一共有多少个全星
-        for (let i = 0; i < integer; i++) {
-          result.push(CLS_ON);
-        }
-        if (hasDecimal) {
-          result.push(CLS_HALF);
-        }
-        // 如果个数达不到5星,则添加空星
-        while (result.length < LENGTH) {
-          result.push(CLS_OFF);
-        }
-        return result;
-      }
+    score: { // 评分
+      type: Number
     }
+  },
+  computed: {
+    starType () { // 简写 starType(){}
+      return 'star-' + this.size // 动态的返回star大小的样式
+    },
+    itemClasses () { // 获取判断星星的类型
+      let result = []
+      // 例如 4.3 * 2 = 8.6 向下取整就是 9，9 / 2 就是 4.5
+      let score = Math.floor(this.score * 2) / 2 // 获取评分的分数
+      let hasDecimal = score % 1 !== 0 // 判断是否有小数(半星)
+      let integer = Math.floor(score) // 计算一共有多少个全星
+      for (let i = 0; i < integer; i++) {
+        result.push(CLS_ON)
+      }
+      if (hasDecimal) {
+        result.push(CLS_HALF)
+      }
+      // 如果个数达不到5星,则添加空星
+      while (result.length < LENGTH) {
+        result.push(CLS_OFF)
+      }
+      return result
+    }
+  }
 }
 </script>
 <style lang="less" scoped>
@@ -70,8 +69,6 @@ export default {
           .bg-image('star48_off')
         }
       }
-      
-      
     }
 }
 </style>

@@ -19,18 +19,19 @@
 </template>
 <script>
 import vheader from './components/head'
-const ERR_OK = 0 ;
+const ERR_OK = 0
 export default {
   data () {
     return {
-      seller: {}
+      seller: {
+        avatar: {}
+      }
     }
   },
   created () {
     this.axios.get('/api/seller').then(res => {
-      console.log(res.data.errno)
-      if(res.data.errno === ERR_OK){
-        this.seller = res.data.data.seller
+      if (res.data.errno === ERR_OK) {
+        this.seller = res.data.data
       }
     })
   },

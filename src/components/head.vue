@@ -1,89 +1,86 @@
 <template>
   <div class="header">
     <div class="content-wrapper">
-      <div class="avatar">
-    		<img :src="seller.avatar" width="64" height="64">
-    	</div>
-      <div class="content">
-        <div class="title">
-          <span class="brand"></span>
-    			<span class="name">{{seller.name}}</span>
+        <div class="avatar">
+          <img :src="seller.avatar" width="64" height="64">
         </div>
-        <div class="desc">
-    			{{seller.description}}/{{seller.deliveryTime}}分钟送达
-    		</div>
-        <div class="support" v-if="seller.supports">
-    			<span class="icon" :class="classMap[seller.supports[4].type]"></span>
-    			<span class="text">{{seller.supports[4].description}}</span>
-    		</div>
+      <div class="content">
+          <div class="title">
+            <span class="brand"></span>
+            <span class="name">{{seller.name}}</span>
+          </div>
+          <div class="desc">
+            {{seller.description}}/{{seller.deliveryTime}}分钟送达
+          </div>
+          <div class="support" v-if="seller.supports">
+            <span class="icon" :class="classMap[seller.supports[4].type]"></span>
+            <span class="text">{{seller.supports[4].description}}</span>
+          </div>
       </div>
-      <div class="support-count" v-if="seller.supports">
-    		<span class="count">{{seller.supports.length}}个</span>
-    		<span class="icon" @click="show">
-          <svg class="icon" aria-hidden="true">
-              <use xlink:href="#icon-arrow"></use>
-            </svg>
-        </span>
-    	</div>
+        <div class="support-count" v-if="seller.supports">
+            <span class="count">{{seller.supports.length}}个</span>
+            <span class="icon" @click="show">
+              <svg class="icon" aria-hidden="true">
+                  <use xlink:href="#icon-arrow"></use>
+                </svg>
+            </span>
+        </div>
     </div>
     <div class="bulletin-wrapper">
-    	<span class="bulletin-title"></span>
-    	<span class="bulletin-text">{{seller.bulletin}}</span>
-    	<span class="icon-right" @click="show">
-          <svg class="icon" aria-hidden="true">
-              <use xlink:href="#icon-arrow"></use>
-            </svg>
-      </span>
+        <span class="bulletin-title"></span>
+        <span class="bulletin-text">{{seller.bulletin}}</span>
+        <span class="icon-right" @click="show">
+            <svg class="icon" aria-hidden="true">
+                <use xlink:href="#icon-arrow"></use>
+              </svg>
+        </span>
     </div>
-    <div class="bg">
-    	<img :src="seller.avatar" alt="bg" width="100%" height="100%">
-    </div>
-    <div class="details" v-show="detailShow" transition="fade">
+      <div class="bg">
+        <img :src="seller.avatar" alt="bg" width="100%" height="100%">
+      </div>
+    <div class="details" v-show="detailShow" transition="fade" @click="close">
       <div class="details-wrapper clearfix">
           <div class="detail-main">
             <h1 class="deails-name">{{seller.name}}</h1>
              <div class="star-wrapper">
                <star :size="48" :score="seller.score"></star>
              </div>
+                    <div class="detail-title">
+                      <div class="line"></div>
+                      <div class="text">商家优惠</div>
+                      <div class="line"></div>
+                    </div>
+                  <ul v-if="seller.supports" class="supports">
+                    <li v-for="(item, index) in seller.supports" :key="index" class="supports-item">
+                      <span class="supports-icon" :class="classMap[seller.supports[index].type]"></span>
+                      <span class="supports-text">{{item.description}}</span>
+                    </li>
+              </ul>
               <div class="detail-title">
-    				     <div class="line"></div>
-    			       <div class="text">商家优惠</div>
-    			       <div class="line"></div>
-    			    </div>
-              <ul v-if="seller.supports" class="supports">
-    				<li v-for="(item, index) in seller.supports" :key="index" class="supports-item">
-    					<span class="supports-icon" :class="classMap[seller.supports[index].type]"></span>
-    					<span class="supports-text">{{item.description}}</span>
-    				</li>
-    			</ul>
-    			<div class="detail-title">
-    				<div class="line"></div>
-    			    <div class="text">商家公告</div>
-    			    <div class="line"></div>
-    			</div>
-    			<div class="bulletin">
-    				<p class="contents">{{seller.bulletin}}</p>
-    			</div>
+                <div class="line"></div>
+                  <div class="text">商家公告</div>
+                  <div class="line"></div>
+              </div>
+                  <div class="bulletin">
+                      <p class="contents">{{seller.bulletin}}</p>
+                  </div>
           </div>
       </div>
-
       <div class="detail-close" @click="close">&times;</div>
     </div>
   </div>
 </template>
-
 <script>
-// @ is an alias to /src
 import star from './star.vue'
 export default {
   name: 'vheader',
   props: {
-    seller:{
+    seller: {
       type: Object
     }
   },
   created () {
-    this.classMap = ['decrease','discount','special','invoice','guarantee'];
+    this.classMap = ['decrease', 'discount', 'special', 'invoice', 'guarantee']
   },
   components: {
     star
@@ -94,12 +91,12 @@ export default {
     }
   },
   methods: {
-     show(){
+    show () {
       this.detailShow = true
-     },
-     close(){
+    },
+    close () {
       this.detailShow = false
-     }
+    }
   }
 }
 </script>
@@ -112,12 +109,11 @@ export default {
   color: #fff;
   .content-wrapper {
     position: relative;
-    padding:24px 12px 18px 24px;
+    padding: 24px 12px 18px 12px;
     font-size:0;
     .avatar {
       display:inline-block;
       vertical-align: top;
-      font-size:14px;
       img {
         border-radius: 4px;
       }
@@ -133,8 +129,8 @@ export default {
         display:inline-block;
         vertical-align: top;
         width:30px;
+        height: 18px;
         .bg-image('brand');
-        height:18px;
         background-size: 30px 18px;
         background-repeat: no-repeat;
         }
@@ -256,7 +252,11 @@ export default {
     }
     &.fade-enter,&.fade-leave{
       opacity: 0;
+      transition: all 0.4s linear;
       background: rgba(7,17,27,0);
+      .details {
+        transform: rotate(360deg)
+      }
     }
     .details-wrapper{
       min-height: 80%;
@@ -289,7 +289,7 @@ export default {
             padding: 0 12px;
           }
         }
-        .supports　{
+        .supports{
           width: 80%;
           margin: 0 auto;
           .supports-item{
