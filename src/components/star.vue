@@ -9,6 +9,7 @@ const CLS_ON = 'on'
 const CLS_HALF = 'half'
 const CLS_OFF = 'off'
 export default {
+  name: 'star',
   props: {
     size: { // 星星的尺寸 有24/36/48 三种尺寸 也可以直接写成  size: ['size']
       type: Number
@@ -67,6 +68,46 @@ export default {
         }
       &.off{// 无星状态
           .bg-image('star48_off')
+        }
+      }
+    }
+    &.star-36 {
+      .star-item {
+        width: 15px;
+        height: 15px;
+        margin-right: 6px ;// 总图的宽度减去星星的宽度*星数/星星之间的间距个数
+        background-size: 15px 15px;
+      &:last-child {
+          margin-right: 0
+        }
+      &.on {// 全星状态
+          .bg-image('star36_on')
+        }
+      &.half {// 半星状态
+          .bg-image('star36_half')
+        }
+      &.off{// 无星状态
+          .bg-image('star36_off')
+        }
+      }
+    }
+    &.star-24 {
+      .star-item {
+        width: 10px;
+        height: 10px;
+        margin-right: 3px ;// 总图的宽度减去星星的宽度*星数/星星之间的间距个数
+        background-size: 10px 10px;
+      &:last-child {
+          margin-right: 0
+        }
+      &.on {// 全星状态
+          .bg-image('star24_on')
+        }
+      &.half {// 半星状态
+          .bg-image('star24_half')
+        }
+      &.off{// 无星状态
+          .bg-image('star24_off')
         }
       }
     }

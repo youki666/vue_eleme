@@ -34,7 +34,37 @@
                       <h1 class="title">商品信息</h1>
                       <p class="text">{{food.info}}</p>
                     </div>
-               <split></split>
+                    <split></split>
+                    <div class="rating">
+                      <h1 class="title">商品评价</h1>
+                      <ratingselect :selectType="selectType" :onlyContent="onlyContent" :desc="desc"
+               	        :ratings="food.ratings" @select="selectRating" @toggle="toggleContent"></ratingselect>
+                         <div class="rating-wrapper">
+                           <ul v-show="food.ratings &&food.ratings.length">
+                              <li v-show="needShow(rating.rateType, rating.text)" v-for="(rating, index) in food.ratings" :key="index" class="rating-item border-1px">
+                                <div class="user">
+                                  <span class="name">{{rating.username}}</span>
+                                    <img :src="rating.avatar" alt="user" width="12" height="12" class="avatar">
+                                </div>
+                                <div class="time">{{rating.rateTime | formatDate}}</div>
+                                <p class="text">
+                                  <span v-show="rating.rateType === 0">
+                                    <svg class="icon" aria-hidden="true">
+                                       <use xlink:href="#icon-thumbup"></use>
+                                   </svg>
+                                  </span>
+                                  <span v-show="rating.rateType === 1">
+                                    <svg class="icon" aria-hidden="true">
+                                       <use xlink:href="#icon-thumb-down"></use>
+                                   </svg>
+                                  </span>
+                                  <span class="content">{{rating.text}}</span>
+                                </p>
+                              </li>
+               	 	         </ul>
+               	             <div class="no-rating" v-show="!food.ratings || !food.ratings.length">暂无评价</div>
+                         </div>
+                    </div>
                </div>
           </div>
     </transition>
@@ -45,6 +75,9 @@ import Vue from 'vue'
 import BS from 'better-scroll'
 import cartcontrol from './cartcontrol'
 import split from './split'
+import ratingselect from './ratingselect'
+import {formatDate} from './../common/js/date'
+const ALL = 2;
 export default{
     name: 'food',
     props:{
@@ -54,16 +87,33 @@ export default{
       },
     components:{
       cartcontrol,
-      split
+      split,
+      ratingselect
   	},
     data () {
     return {
-        showFlag: false
+        showFlag: false,
+        desc: {
+          all: '全部',
+          positive: '推荐',
+          negative: '吐槽'
+        },
+        selectType: ALL,
+        onlyContent: true
+
     }
   },
+  filters: {
+      formatDate(time) { // 将评价的时间戳转换成 年月日，时分
+        let date = new Date(time); // 先把时间戳转换成date格式
+        return formatDate(date, 'yyyy-MM-dd hh:mm');
+      }
+    },
   methods:{
     show(){
         this.showFlag = true
+        this.selectType = ALL;
+        this.onlyContent = false;
         this.$nextTick(()=>{
        	if(!this.scroll){
        	 this.scroll = new BS(this.$refs.food, {click:true});
@@ -79,11 +129,34 @@ export default{
         this.$emit('add', event.target);
         Vue.set(this.food, 'count', 1);
      },
+    selectRating(type) {
+        this.selectType = type;
+        this.$nextTick(() => {
+          this.scroll.refresh();
+        });
+    },      
+    toggleContent() {
+        this.onlyContent = !this.onlyContent;
+        this.$nextTick(() => {
+          this.scroll.refresh();
+        });
+    },
+    needShow(type, text) { // 需要显示的评价类型
+      if (this.onlyContent && !text) {
+        return false;
+      }
+      if (this.selectType == ALL) {
+        return true;
+      } else {
+        return type === this.selectType;
+      }
+      },
   }
 }
 </script>
 
 <style lang="less" scoped>
+@import './../common/less/mixin.less';
   .food{
    position: fixed;
    left: 0;
@@ -200,6 +273,60 @@ export default{
     font-size: 12px;
     color: rgb(77, 85, 93)
     }
+   }
+   .rating {
+     padding-top: 18px;
+     .title {
+      line-height: 14px;
+      margin-left: 18px;
+      font-size: 14px;
+      color: rgb(7, 17, 27);
+     }
+     .rating-wrapper {
+       padding: 0 18px;
+       .rating-item {
+         position: relative;
+         padding: 16px 0;
+         .user {
+           position: absolute;
+            right: 0;
+            top: 16px;
+            line-height: 12px;
+            font-size: 0;
+            .name {
+              display: inline-block;
+              margin-right: 6px;
+              vertical-align: top;
+              font-size: 10px;
+              color: rgb(147, 153, 159);
+            }
+            .avatar {
+              border-radius: 50%
+            }
+         }
+         .time {
+           margin-bottom: 6px;
+            line-height: 12px;
+            font-size: 10px;
+            color: rgb(147, 153, 159)
+         }
+         .text {
+            line-height: 16px;
+            font-size: 12px;
+            color: rgb(7, 17, 27);
+            .content{
+               display: inline;
+               margin-left: 10px;
+            }
+         }
+       }
+     }
+     .no-rating{
+      line-height: 14px;
+      margin-top: 10px;
+      font-size: 14px;
+      color: rgb(7, 17, 27);
+     }
    }
   }
    .move-enter-active,&.move-leave-active{
