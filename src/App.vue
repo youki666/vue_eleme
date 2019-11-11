@@ -14,7 +14,7 @@
     </div>
     <div class="content">
           <router-view :seller='seller'></router-view>
-       </div>
+    </div>
   </div>
 </template>
 <script>
@@ -24,7 +24,7 @@ export default {
   data () {
     return {
       seller: {
-        avatar: {}
+        // avatar: {}
       }
     }
   },

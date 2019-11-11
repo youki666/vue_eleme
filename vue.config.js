@@ -30,7 +30,7 @@ module.exports = {
           data: goods
         })
       })
-      app.get('/api/ratings', function (rea, res) {
+      app.get('/api/ratings', function (req, res) {
         res.json({
           errno: 0,
           data: ratings

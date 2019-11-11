@@ -6,7 +6,7 @@
                     <div class="logo-wrapper">
                         <div class="logo" :class="{'highlight':totalPrice > 0}">
                             <span class='icon' >
-                                 <svg class="icon" aria-hidden="true" :class="{'highlight':totalPrice > 0}">
+                                <svg class="icon" aria-hidden="true" :class="{'highlight':totalPrice > 0}">
                                   <use xlink:href="#icon-shoppingcart"></use>
                                 </svg>
                             </span>
@@ -44,7 +44,7 @@
                 </div>
             </transition>
         </div>
-         <!-- 购物车弹出的黑色遮罩层 -->
+        <!-- 购物车弹出的黑色遮罩层 -->
     <transition name="fade">
       <div class="list-mask" @click="hideList" v-show="listShow"></div>
     </transition>
@@ -240,8 +240,8 @@ export default {
       .content-right {
           flex:0 0 105px;
           width: 105px;
-         font-weight: 700;
-         .pay{
+          font-weight: 700;
+          .pay{
             font-size: 12px;
             line-height: 48px;
             height: 48px;
@@ -319,7 +319,7 @@ export default {
        }
         }
       }
-        
+
   }
 }
 .list-mask{
@@ -339,7 +339,6 @@ export default {
       opacity: 0;
       background: rgba(7, 17, 27, 0);
     }
-      
 }
 </style>
 

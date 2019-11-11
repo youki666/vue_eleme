@@ -47,7 +47,7 @@ export default {
       }
     },
     computed:{
-     positive(){
+     positive (){
          return this.ratings.filter((rating)=>{
          	 return rating.rateType === POSITIVE;
          })
@@ -104,9 +104,9 @@ export default {
        background: rgba(77, 85, 93, .2);
        &.active {
         background: rgb(77, 85, 93)
-    }
-    }       
-}
+        }
+      }    
+ }
 .switch{
      padding: 12px 18px;
       line-height: 24px;
@@ -116,7 +116,7 @@ export default {
       &.on{
         .icon-check{
            color: #00c850
-        }  
+        }
       }
       .icon-check {
         display: inline-block;
@@ -128,6 +128,5 @@ export default {
         vertical-align: top;
         font-size: 12px;
       }
-        
 }
 </style>

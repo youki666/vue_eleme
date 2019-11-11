@@ -13,8 +13,8 @@
             {{seller.description}}/{{seller.deliveryTime}}分钟送达
           </div>
           <div class="support" v-if="seller.supports">
-            <span class="icon" :class="classMap[seller.supports[4].type]"></span>
-            <span class="text">{{seller.supports[4].description}}</span>
+            <span class="icon" :class="classMap[seller.supports[2].type]"></span>
+            <span class="text">{{seller.supports[2].description}}</span>
           </div>
       </div>
         <div class="support-count" v-if="seller.supports">
@@ -38,36 +38,38 @@
       <div class="bg">
         <img :src="seller.avatar" alt="bg" width="100%" height="100%">
       </div>
-    <div class="details" v-show="detailShow" transition="fade" @click="close">
-      <div class="details-wrapper clearfix">
-          <div class="detail-main">
-            <h1 class="deails-name">{{seller.name}}</h1>
-             <div class="star-wrapper">
-               <star :size="48" :score="seller.score"></star>
-             </div>
-                    <div class="detail-title">
-                      <div class="line"></div>
-                      <div class="text">商家优惠</div>
-                      <div class="line"></div>
+      <transition name='fade'>
+        <div class="details" v-show="detailShow"  @click="close">
+                <div class="details-wrapper clearfix">
+                    <div class="detail-main">
+                      <h1 class="deails-name">{{seller.name}}</h1>
+                      <div class="star-wrapper">
+                        <star :size="48" :score="seller.score"></star>
+                      </div>
+                              <div class="detail-title">
+                                <div class="line"></div>
+                                <div class="text">商家优惠</div>
+                                <div class="line"></div>
+                              </div>
+                            <ul v-if="seller.supports" class="supports">
+                              <li v-for="(item, index) in seller.supports" :key="index" class="supports-item">
+                                <span class="supports-icon" :class="classMap[seller.supports[index].type]"></span>
+                                <span class="supports-text">{{item.description}}</span>
+                              </li>
+                            </ul>
+                        <div class="detail-title">
+                          <div class="line"></div>
+                            <div class="text">商家公告</div>
+                            <div class="line"></div>
+                        </div>
+                            <div class="bulletin">
+                                <p class="contents">{{seller.bulletin}}</p>
+                            </div>
                     </div>
-                  <ul v-if="seller.supports" class="supports">
-                    <li v-for="(item, index) in seller.supports" :key="index" class="supports-item">
-                      <span class="supports-icon" :class="classMap[seller.supports[index].type]"></span>
-                      <span class="supports-text">{{item.description}}</span>
-                    </li>
-              </ul>
-              <div class="detail-title">
-                <div class="line"></div>
-                  <div class="text">商家公告</div>
-                  <div class="line"></div>
-              </div>
-                  <div class="bulletin">
-                      <p class="contents">{{seller.bulletin}}</p>
-                  </div>
-          </div>
+                </div>
+                <div class="detail-close" @click="close">&times;</div>
       </div>
-      <div class="detail-close" @click="close">&times;</div>
-    </div>
+      </transition>
   </div>
 </template>
 <script>
@@ -209,7 +211,7 @@ export default {
      text-overflow: ellipsis;
      .bulletin-title{
       display: inline-block;
-      vertical-align: top;
+      vertical-align: center;
       width: 22px;
       height: 12px;
       margin-top: 7px;
@@ -252,18 +254,18 @@ export default {
     }
     &.fade-enter,&.fade-leave{
       opacity: 0;
-      transition: all 0.4s linear;
+      transition: all 1s linear;
       background: rgba(7,17,27,0);
       .details {
-        transform: rotate(360deg)
+        transform: rotate(360deg);
       }
     }
     .details-wrapper{
       min-height: 80%;
       width: 100%;
       .detail-main{
-        margin-top: 64px;
-        padding-bottom: 64px;
+        margin-top: 48px;
+        padding-bottom: 48px;
         text-align: center;
         .star-wrapper{
           margin-top: 18px;
