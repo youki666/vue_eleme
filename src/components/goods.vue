@@ -44,29 +44,29 @@
     </div>
   </template>
 
-  <script>
-  import cartcontrol from './cartcontrol.vue'
-  import BS from 'better-scroll'
-  import food from './food.vue'
-  import shopcart from './shopcart'
-  export default {
+<script>
+import cartcontrol from './cartcontrol.vue'
+import BS from 'better-scroll'
+import food from './food.vue'
+import shopcart from './shopcart'
+export default {
     name: 'goods',
     props: {
-      seller: {
-        type: Object
-      }
+        seller: {
+          type: Object
+        }
     },
     components: {
-      cartcontrol,
-      food,
-      shopcart
+        cartcontrol,
+        food,
+        shopcart
     },
     data () {
       return {
-        goods: [],
-        listHeight: [],
-        scrollY: 0,
-        selectedFood: {}
+          goods: [],
+          listHeight: [],
+          scrollY: 0,
+          selectedFood: {}
       }
     },
     computed: {
